@@ -1,0 +1,9 @@
+<div class="container">
+  <h1>{{ title }}</h1>
+  <div class="weather-card">
+    <p><strong>Condition:</strong> {{ weather.condition }}</p>
+    <p><strong>Temperature:</strong> {{ weather.temperature }}</p>
+    <p *ngIf="error" class="error">{{ error }}</p>
+    <button (click)="loadWeather()">Refresh</button>
+  </div>
+</div>
