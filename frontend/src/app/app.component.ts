@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 
@@ -19,7 +19,9 @@ export class AppComponent implements OnInit {
   weather: WeatherData = { condition: 'Loading...', temperature: 'Loading...' };
   error: string | null = null;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient,
+    private cdr: ChangeDetectorRef
+  ) {}
 
   ngOnInit(): void {
     this.loadWeather();
@@ -30,10 +32,12 @@ export class AppComponent implements OnInit {
       next: (data) => {
         this.weather = data;
         this.error = null;
+        this.cdr.detectChanges();
       },
       error: (err) => {
         this.error = 'Failed to load weather data';
         console.error(err);
+        this.cdr.detectChanges();
       }
     });
   }
